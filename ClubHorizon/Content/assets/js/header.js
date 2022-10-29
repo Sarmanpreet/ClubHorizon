@@ -1,0 +1,2 @@
+(function($){"use strict";$(document).ready(function(){$(window).scroll(function(){var scroll=$(window).scrollTop();if(scroll>50){$(".header-trans").css("background","#134a56");$(".header-trans").css("top","0");}
+else{$(".header-trans").css("background","transparent");$(".header-trans").css("top","auto");}})})})(jQuery);
