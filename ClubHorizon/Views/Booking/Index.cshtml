@@ -1,0 +1,151 @@
+﻿@model IEnumerable<ClubHorizon.Data.DBModel.TimeSlotMaster>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="~/Content/assets/css/evo-calendar.css" />
+
+
+<link rel="stylesheet" href="~/Content/assets/css/evo-calendar.royal-navy.css" />
+<style>
+    .red {
+        background:red !important;
+    }
+</style>
+
+<!--<div class="breadcrumb-bar" >
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-12">
+                <nav aria-label="breadcrumb" class="page-breadcrumb">
+                    <ol class="breadcrumb">-->
+                        @*<li class="breadcrumb-item"><a href="index-2.html">Home</a></li>*@
+                        <!--<li class="breadcrumb-item active" aria-current="page">Home/Booking</li>
+                    </ol>
+                </nav>
+                <h2 class="breadcrumb-title">Booking</h2>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="content" style="margin-top:-8% !important">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="booking-doc-info">
+                            @*<a href="advisors-profile.html" class="booking-doc-img">
+                                <img src="assets/img/coaches/admin-thumb-02.jpg" alt="User Image">
+                            </a>*@
+                            <div class="booking-info">
+                                <h4><a href="advisors-profile.html"> Booking</a></h4>
+                                <div class="rating">
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star filled"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span class="d-inline-block average-rating">35</span>
+                                </div>
+                                <p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i> Ludhiana, India</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="evoCalendar" class="mb-3"></div>
+
+
+              
+
+
+                <div class="submit-section proceed-btn text-end">
+                    <a href="checkout.html" class="btn btn-primary submit-btn">Proceed to Pay</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+
+<script src="~/Content/assets/js/evo-calendar.js" defer></script>
+<script>
+   
+    $(document).ready(function () {
+        $('#evoCalendar').evoCalendar({
+            theme: 'royal navy',
+            language: 'en',
+
+            date: {
+                en: {
+                    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                    daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    noEventForToday: "No event for today.. so take a rest! :)",
+                    noEventForThisDay: "No event for this day.. so take a rest! :)"
+                }
+            },
+
+
+        }).on('selectDate', function (newDate, oldDate) {
+            // do something
+        })
+            .on('selectMonth', function (activeMonth, monthIndex) {
+                // do something
+            })
+            .on('selectYear', function (activeYear) {
+                // do something
+            })
+            .on('selectEvent', function (activeEvent,selected) {
+                AddEditSlot(selected);
+                
+                $(".event-container").removeClass("red")
+                const parentWithClass = event.target.closest('.event-container');
+                parentWithClass.classList.add("red");
+            })
+            .on('destroy', function (calendar) {
+                // do something
+            });
+        $.ajax({
+            type: "GET",
+            url: "/Booking/GetTimeSlot/1",
+            success: function (data) {
+                GenerateCalender(data);
+                
+            },
+            error: function (error) {
+                alert('failed');
+            }
+        })
+      
+        function GenerateCalender(data) {
+            $("#evoCalendar").evoCalendar('addCalendarEvent',         
+               data
+            );
+         
+        }
+        function AddEditSlot(data) {
+
+            $.ajax({
+                type: "POST",
+                url: '/Booking/setTimeSlot/',
+                data: data,
+                success: function (data) {
+                    console.log(data)
+                   
+                },
+                error: function (error) {
+                    alert('Failed');
+                }
+            })
+        }
+    });
+   /* https://www.jqueryscript.net/time-clock/event-calendar-evo.html*/
+</script>
+

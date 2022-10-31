@@ -4,11 +4,66 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
+
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+
+                <div class="account-content">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-7 col-lg-6 login-left">
+                            <img src="~/Content/assets/img/login-banner.png" class="img-fluid" alt="Golf Courses Login">
+                        </div>
+                        <div class="col-md-12 col-lg-6 login-right">
+                            <div class="login-header">
+                                <h3>Login <span>Golf Courses</span></h3>
+                            </div>
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <div class="form-group form-focus">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control floating" })
+                                    @Html.LabelFor(m => m.Email, new { @class = " focus-label" })
+                                </div>
+                                <div class="form-group form-focus">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control floating" })
+                                    @Html.LabelFor(m => m.Password, new { @class = " focus-label" })
+                                </div>
+                                <div class="text-end">
+                                    <a class="forgot-link" href="@Url.Action("ForgotPassword", "Account")">Forgot Password ?</a>
+                                </div>
+                                <button class="btn btn-primary btn-block btn-lg login-btn w-100" type="submit">Login</button>
+                                @*<div class="login-or">
+                                    <span class="or-line"></span>
+                                    <span class="span-or">or</span>
+                                </div>
+                                <div class="row form-row social-login">
+                                    <div class="col-6">
+                                        <a href="#" class="btn btn-facebook btn-block w-100"><i class="fab fa-facebook-f me-1"></i> Login</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="#" class="btn btn-google btn-block w-100"><i class="fab fa-google me-1"></i> Login</a>
+                                    </div>
+                                </div>*@
+                        <div class="text-center dont-have">Don’t have an account?  @Html.ActionLink("Register", "Register")</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<h2>@ViewBag.Title.</h2>
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 <h4>Use a local account to log in.</h4>
@@ -42,13 +97,13 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Register as a new user", "Register")
+                   
                 </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
+                Enable this once you have account confirmation enabled for password reset functionality
                     <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
+                        Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*
+            <!--}
         </section>
     </div>
     <div class="col-md-4">
@@ -58,6 +113,4 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+-->

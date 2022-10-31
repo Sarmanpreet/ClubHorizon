@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubHorizon", "ClubHorizon\ClubHorizon.csproj", "{908AF951-16F7-4DD4-B239-D848F28C0FCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubHorizon.Data", "ClubHorizon.Data\ClubHorizon.Data.csproj", "{D436112D-C774-4EDB-AB53-3CD96EB17937}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{908AF951-16F7-4DD4-B239-D848F28C0FCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{908AF951-16F7-4DD4-B239-D848F28C0FCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{908AF951-16F7-4DD4-B239-D848F28C0FCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D436112D-C774-4EDB-AB53-3CD96EB17937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D436112D-C774-4EDB-AB53-3CD96EB17937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D436112D-C774-4EDB-AB53-3CD96EB17937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D436112D-C774-4EDB-AB53-3CD96EB17937}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

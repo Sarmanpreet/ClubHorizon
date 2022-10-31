@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<section class="banner-section align-items-center">
+<section class="banner-section align-items-center" style="margin-top:-9% !important">
     <div class="container">
         <div class="banner-top">
             <div class="banner-content">
@@ -10,7 +10,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor, nunc vulputate aliquam in.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor, nunc vulputate aliquam in.</p>
                 <div class="text-center m-auto banner-btns">
                     <a href ="@Url.Action("register","account")" class="btn banner-white-outline">JOIN OUR CLUB</a>
-                    <button onclick="document.location='booking.html'" class="btn banner-primary">SEE COURSES</button>
+                    <button onclick="@Url.Action("index","booking")" class="btn banner-primary">SEE COURSES</button>
                 </div>
             </div>
         </div>

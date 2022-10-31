@@ -100,7 +100,7 @@
                         </div>
                         <ul class="main-nav bg-trans">
                             <li class="active">
-                                <a href="index-2.html">Home</a>
+                                <a href="@Url.Action("index","home")">Home</a>
                             </li>
                             <li class="has-submenu">
                                 <a href="#">Golf Advisors <i class="fas fa-chevron-down"></i></a>
@@ -176,7 +176,8 @@
                     <ul class="nav header-navbar-rht align-items-center">
                         <li class="nav-item contact-item">
                             <i class="far fa-user me-2"></i>
-                            <a href="login.html">SIGN UP / SIGN IN</a>
+                            @Html.Partial("_LoginPartial")
+                            @*<a href="login.html">SIGN UP / SIGN IN</a>*@
                         </li>
                         <li class="nav-item cart-item">
                             <a href="booking.html"><img src="~/Content/assets/img/golf-vector.png" alt="" class="img-fluid"> </a>
