@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="~/Content/assets/css/evo-calendar.royal-navy.css" />
 <style>
     .red {
-        background:red !important;
+        background: #2d4652 !important;
     }
 </style>
 
@@ -30,7 +30,7 @@
 </div>-->
 
 
-<div class="content" style="margin-top:-8% !important">
+<div class="content" style="margin-top:-3% !important">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -42,14 +42,14 @@
                             </a>*@
                             <div class="booking-info">
                                 <h4><a href="advisors-profile.html"> Booking</a></h4>
-                                <div class="rating">
+                                @*<div class="rating">
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star filled"></i>
                                     <i class="fas fa-star"></i>
                                     <span class="d-inline-block average-rating">35</span>
-                                </div>
+                                </div>*@
                                 <p class="text-muted mb-0"><i class="fas fa-map-marker-alt"></i> Ludhiana, India</p>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
 
 
                 <div class="submit-section proceed-btn text-end">
-                    <a href="checkout.html" class="btn btn-primary submit-btn">Proceed to Pay</a>
+                    <a href="@Url.Action("checkout","booking")" class="btn btn-primary submit-btn">Proceed to Pay</a>
                 </div>
 
             </div>
@@ -94,6 +94,8 @@
 
 
         }).on('selectDate', function (newDate, oldDate) {
+            /* $(".icon-button").click();*/
+            $("#evoCalendar").removeClass("event-hide");
             // do something
         })
             .on('selectMonth', function (activeMonth, monthIndex) {
@@ -105,9 +107,9 @@
             .on('selectEvent', function (activeEvent,selected) {
                 AddEditSlot(selected);
                 
-                $(".event-container").removeClass("red")
+                //$(".event-container").removeClass("red")
                 const parentWithClass = event.target.closest('.event-container');
-                parentWithClass.classList.add("red");
+                parentWithClass.classList.toggle("red");
             })
             .on('destroy', function (calendar) {
                 // do something

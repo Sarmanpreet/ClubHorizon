@@ -21,11 +21,33 @@ namespace ClubHorizon.Controllers
         {
             return View(db.TimeSlotMasters.ToList());
         }
+        public ActionResult checkout()
+        {
+            return View();
+        }
 
         public JsonResult setTimeSlot(demoevent de)
         {
-            
-            Session.Add("BookId", EncryptDecryptStringHelper.EncryptString(JsonConvert.SerializeObject(de)));
+           
+           
+
+            List<demoevent> Decript = new List<demoevent>(); 
+            if (Session["BookId"] != null && !string.IsNullOrEmpty(Session["BookId"].ToString()))
+            {
+                var data = EncryptDecryptStringHelper.DecryptString(Session["BookId"].ToString());
+                Decript = (List<demoevent>)JsonConvert.DeserializeObject<List<demoevent>>(data);
+             
+            }
+            if (Decript.Any(i => i.id == de.id))
+            {
+               int index= Decript.FindIndex(i=>i.id == de.id);
+                Decript.RemoveAt(index);
+            }
+            else
+            {
+                Decript.Add(de);
+            }
+            Session.Add("BookId", EncryptDecryptStringHelper.EncryptString(JsonConvert.SerializeObject(Decript)));
             return new JsonResult {Data="true", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         public JsonResult GetTimeSlot(int id)

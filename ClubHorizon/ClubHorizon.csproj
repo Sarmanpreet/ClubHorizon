@@ -357,6 +357,8 @@
     <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-solid-900.woff" />
     <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-solid-900d41d.eot" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -408,6 +410,7 @@
     <Content Include="Views\Booking\Edit.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\Index - Copy.cshtml" />
+    <Content Include="Views\Booking\checkout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

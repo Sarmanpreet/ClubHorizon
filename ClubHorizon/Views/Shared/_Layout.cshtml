@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Pathivu | Golf Courses</title>
+    <title>  Golf Horizon</title>
 
     <link type="image/x-icon" href="~/Content/assets/img/favicon.png" rel="icon">
 
@@ -85,14 +85,14 @@
                                 <span></span>
                             </span>
                         </a>
-                        <a href="index-2.html" class="navbar-brand logo">
-                            <img src="~/Content/assets/img/logo.png" class="img-fluid" alt="Logo">
+                        <a href="@Url.Action("index","home")" class="navbar-brand logo">
+                            <img src="~/Content/assets/img/logo.png" class="img-logo" alt="Logo">
                         </a>
                     </div>
                     <div class="main-menu-wrapper">
                         <div class="menu-header">
-                            <a href="index-2.html" class="menu-logo">
-                                <img src="~/Content/assets/img/logo.png" class="img-fluid" alt="Logo">
+                            <a href="@Url.Action("index","home")" class="menu-logo">
+                                <img src="~/Content/assets/img/logo.png" class="img-fluid" style="width:33% !important" alt="Logo">
                             </a>
                             <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                 <i class="fas fa-times"></i>
@@ -102,72 +102,7 @@
                             <li class="active">
                                 <a href="@Url.Action("index","home")">Home</a>
                             </li>
-                            <li class="has-submenu">
-                                <a href="#">Golf Advisors <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li><a href="advisors-dashboard.html">Golf Advisors Dashboard</a></li>
-                                    <li><a href="batch.html">Batch</a></li>
-                                    <li><a href="schedule-timings.html">Schedule Timing</a></li>
-                                    <li><a href="my-golfers.html">Golfers List</a></li>
-                                    <li><a href="golfer-profile.html">Golfers Profile</a></li>
-                                    <li><a href="chat-advisor.html">Chat</a></li>
-                                    <li><a href="invoices.html">Invoices</a></li>
-                                    <li><a href="advisors-profile-settings.html">Profile Settings</a></li>
-                                    <li><a href="reviews.html">Reviews</a></li>
-                                    <li><a href="advisors-register.html">Golf Advisors Register</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="#">Golfers <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li class="has-submenu">
-                                        <a href="#">Advisors</a>
-                                        <ul class="submenu">
-                                            <li><a href="map-grid.html">Map Grid</a></li>
-                                            <li><a href="map-list.html">Map List</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="search.html">Search Golf Advisors</a></li>
-                                    <li><a href="advisors-profile.html">Golf Advisors Profile</a></li>
-                                    <li><a href="booking.html">Booking</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="booking-success.html">Booking Success</a></li>
-                                    <li><a href="golfer-dashboard.html">Golfers Dashboard</a></li>
-                                    <li><a href="favourites.html">Favourites</a></li>
-                                    <li><a href="chat.html">Chat</a></li>
-                                    <li><a href="profile-settings.html">Profile Settings</a></li>
-                                    <li><a href="change-password.html">Change Password</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="#">Pages <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li><a href="voice-call.html">Voice Call</a></li>
-                                    <li><a href="video-call.html">Video Call</a></li>
-                                    <li><a href="search.html">Search Golf Advisors</a></li>
-                                    <li><a href="calendar.html">Calendar</a></li>
-                                    <li><a href="components.html">Components</a></li>
-                                    <li class="has-submenu">
-                                        <a href="invoices.html">Invoices</a>
-                                        <ul class="submenu">
-                                            <li><a href="invoices.html">Invoices</a></li>
-                                            <li><a href="invoice-view.html">Invoice View</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="blank-page.html">Starter Page</a></li>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="register.html">Register</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="#">Blog <i class="fas fa-chevron-down"></i></a>
-                                <ul class="submenu">
-                                    <li><a href="blog-list.html">Blog List</a></li>
-                                    <li><a href="blog-grid.html">Blog Grid</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
+                         
                             <li class="login-link">
                                 <a href="login.html">Login / Signup</a>
                             </li>
@@ -180,7 +115,7 @@
                             @*<a href="login.html">SIGN UP / SIGN IN</a>*@
                         </li>
                         <li class="nav-item cart-item">
-                            <a href="booking.html"><img src="~/Content/assets/img/golf-vector.png" alt="" class="img-fluid"> </a>
+                            <a href="@Url.Action("index","booking")"><img src="~/Content/assets/img/golf-vector.png" alt="" class="img-fluid"> </a>
                         </li>
                     </ul>
                 </div>
@@ -219,11 +154,11 @@
                                 <div class="footer-widget footer-about">
                                     <div class="footer-about-content">
                                         <h5>Our Location</h5>
-                                        <p class="mb-4">66 Broklyn Street, New York </p>
+                                        <p class="mb-4">Ludhiana, Punjab </p>
                                         <h5>Email Address</h5>
                                         <p class="mb-4"><a href="../cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="75121a191335100d14180519105b161a18">[email&#160;protected]</a> </p>
                                         <h5>Phone Number</h5>
-                                        <p>235 4558 447 </p>
+                                        <p>987 4558 447 </p>
                                     </div>
                                 </div>
 
@@ -232,8 +167,8 @@
 
                                 <div class="footer-widget footer-menu text-center">
                                     <div class="footer-about">
-                                        <img src="~/Content/assets/img/logo.png" alt="" class="img-fluid mb-3">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor, nunc vulputate aliquam in.</p>
+                                        <img src="~/Content/assets/img/logo.png" alt="" class="img-logo mb-3">
+                                        @*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor, nunc vulputate aliquam in.</p>*@
                                         <ul>
                                             <li>
                                                 <a href="#"><i class="fab fa-facebook-f footer-icons"></i></a>
@@ -256,11 +191,11 @@
 
                                 <div class="footer-widget footer-menu">
                                     <ul>
-                                        <li><a href="search.html">Search Coaches</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="register.html">Register</a></li>
-                                        <li><a href="favourites.html">Favourites</a></li>
-                                        <li><a href="golfer-dashboard.html">Golfers Dashboard</a></li>
+                                        @*<li><a href="search.html">Search Coaches</a></li>*@
+                                        <li><a href="@Url.Action("Login","Account")">Login</a></li>
+                                        <li><a href="@Url.Action("Register","Account")">Register</a></li>
+                                        <li><a href="favourites.html">Privacy Policy</a></li>
+                                        @*<li><a href="golfer-dashboard.html">Golfers Dashboard</a></li>*@
                                     </ul>
                                 </div>
 
@@ -269,11 +204,11 @@
 
                                 <div class="footer-widget footer-menu">
                                     <ul>
-                                        <li><a href="my-golfers.html">Golfers List</a></li>
-                                        <li><a href="chat-advisor.html">Chat</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="advisors-register.html">Advisors Register</a></li>
-                                        <li><a href="advisors-dashboard.html">Coaches Dashboard</a></li>
+                                        <li><a href="my-golfers.html">cancellation policy</a></li>
+                                        <li><a href="chat-advisor.html">Refund policy</a></li>
+                                        <li><a href="@Url.Action("Login","Account")">Login</a></li>
+                                        @*<li><a href="advisors-register.html">Advisors Register</a></li>
+                                        <li><a href="advisors-dashboard.html">Coaches Dashboard</a></li>*@
                                     </ul>
                                 </div>
 
@@ -290,7 +225,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="copyright-text text-start">
-                                        <p>© 2021 Hole18golfcourses. All Rights Reserved</p>
+                                        <p>© 2021 GolfersHorizon. All Rights Reserved</p>
                                     </div>
                                 </div>
                             </div>
