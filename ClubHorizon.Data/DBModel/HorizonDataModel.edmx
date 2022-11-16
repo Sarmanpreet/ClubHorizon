@@ -4,7 +4,55 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ghorizonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ghorizonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BookingDtlInfo">
+          <Key>
+            <PropertyRef Name="OrderDtlId" />
+          </Key>
+          <Property Name="OrderDtlId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="TimeSlotsId" Type="int" Nullable="false" />
+          <Property Name="LocId" Type="int" />
+          <Property Name="TimeSlots" Type="nvarchar" MaxLength="500" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsCancelled" Type="bit" />
+          <Property Name="CancelledOn" Type="datetime" />
+          <Property Name="IsRefunded" Type="bit" />
+          <Property Name="RefundedOn" Type="datetime" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="BookingInfo">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Userid" Type="nvarchar" MaxLength="500" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="500" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="500" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="TotalSlot" Type="int" />
+          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TransectionStatus" Type="nvarchar" MaxLength="20" />
+          <Property Name="TransectionNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsCancelled" Type="bit" />
+          <Property Name="CancelledOn" Type="datetime" />
+          <Property Name="IsRefunded" Type="bit" />
+          <Property Name="RefundedOn" Type="datetime" />
+          <Property Name="NetAmount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DiscountAmount" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
         <EntityType Name="LocationMaster">
           <Key>
             <PropertyRef Name="LocId" />
@@ -32,11 +80,12 @@
           <Property Name="IsActive" Type="bit" />
         </EntityType>
         <EntityContainer Name="ghorizonModelStoreContainer">
+          <EntitySet Name="BookingDtlInfo" EntityType="Self.BookingDtlInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookingInfo" EntityType="Self.BookingInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LocationMaster" EntityType="Self.LocationMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TimeSlotMaster" EntityType="Self.TimeSlotMaster" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ghorizonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -69,7 +118,57 @@
         <EntityContainer Name="ghorizonEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="LocationMasters" EntityType="Self.LocationMaster" />
           <EntitySet Name="TimeSlotMasters" EntityType="Self.TimeSlotMaster" />
+          <EntitySet Name="BookingDtlInfoes" EntityType="ghorizonModel.BookingDtlInfo" />
+          <EntitySet Name="BookingInfoes" EntityType="ghorizonModel.BookingInfo" />
         </EntityContainer>
+        <EntityType Name="BookingDtlInfo">
+          <Key>
+            <PropertyRef Name="OrderDtlId" />
+          </Key>
+          <Property Name="OrderDtlId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="TimeSlotsId" Type="Int32" Nullable="false" />
+          <Property Name="LocId" Type="Int32" />
+          <Property Name="TimeSlots" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsCancelled" Type="Boolean" />
+          <Property Name="CancelledOn" Type="DateTime" Precision="3" />
+          <Property Name="IsRefunded" Type="Boolean" />
+          <Property Name="RefundedOn" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="BookingInfo">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Userid" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TotalSlot" Type="Int32" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TransectionStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TransectionNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="IsCancelled" Type="Boolean" />
+          <Property Name="CancelledOn" Type="DateTime" Precision="3" />
+          <Property Name="IsRefunded" Type="Boolean" />
+          <Property Name="RefundedOn" Type="DateTime" Precision="3" />
+          <Property Name="NetAmount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DiscountAmount" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -101,6 +200,56 @@
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingDtlInfoes">
+            <EntityTypeMapping TypeName="ghorizonModel.BookingDtlInfo">
+              <MappingFragment StoreEntitySet="BookingDtlInfo">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="RefundedOn" ColumnName="RefundedOn" />
+                <ScalarProperty Name="IsRefunded" ColumnName="IsRefunded" />
+                <ScalarProperty Name="CancelledOn" ColumnName="CancelledOn" />
+                <ScalarProperty Name="IsCancelled" ColumnName="IsCancelled" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TimeSlots" ColumnName="TimeSlots" />
+                <ScalarProperty Name="LocId" ColumnName="LocId" />
+                <ScalarProperty Name="TimeSlotsId" ColumnName="TimeSlotsId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderDtlId" ColumnName="OrderDtlId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingInfoes">
+            <EntityTypeMapping TypeName="ghorizonModel.BookingInfo">
+              <MappingFragment StoreEntitySet="BookingInfo">
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+                <ScalarProperty Name="RefundedOn" ColumnName="RefundedOn" />
+                <ScalarProperty Name="IsRefunded" ColumnName="IsRefunded" />
+                <ScalarProperty Name="CancelledOn" ColumnName="CancelledOn" />
+                <ScalarProperty Name="IsCancelled" ColumnName="IsCancelled" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="TransectionNumber" ColumnName="TransectionNumber" />
+                <ScalarProperty Name="TransectionStatus" ColumnName="TransectionStatus" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="TotalSlot" ColumnName="TotalSlot" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

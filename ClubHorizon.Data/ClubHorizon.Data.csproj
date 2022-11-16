@@ -57,6 +57,12 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Dapper\DapperExecuteService.cs" />
     <Compile Include="Dapper\DataLayer.cs" />
+    <Compile Include="DBModel\BookingDtlInfo.cs">
+      <DependentUpon>HorizonDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBModel\BookingInfo.cs">
+      <DependentUpon>HorizonDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBModel\HorizonDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -92,7 +92,7 @@
                     <div class="main-menu-wrapper">
                         <div class="menu-header">
                             <a href="@Url.Action("index","home")" class="menu-logo">
-                                <img src="~/Content/assets/img/logo.png" class="img-fluid" style="width:33% !important" alt="Logo">
+                                <img src="~/Content/assets/img/logo.png" class="img-fluid" alt="Logo">
                             </a>
                             <a id="menu_close" class="menu-close" href="javascript:void(0);">
                                 <i class="fas fa-times"></i>
@@ -104,7 +104,7 @@
                             </li>
                          
                             <li class="login-link">
-                                <a href="login.html">Login / Signup</a>
+                                <a  href="@Url.Action("login","account")">Login / Signup</a>
                             </li>
                         </ul>
                     </div>
@@ -115,13 +115,13 @@
                             @*<a href="login.html">SIGN UP / SIGN IN</a>*@
                         </li>
                         <li class="nav-item cart-item">
-                            <a href="@Url.Action("index","booking")"><img src="~/Content/assets/img/golf-vector.png" alt="" class="img-fluid"> </a>
+                            <a href="@Url.Action("checkout","booking")"><img src="~/Content/assets/img/golf-vector.png" alt="" class="img-fluid"> </a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
-        <div class=" body-content" style="padding-top:9% ">
+        <div class=" body-content">
             @RenderBody()
         </div>
             <footer class="footer">

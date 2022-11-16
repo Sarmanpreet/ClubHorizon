@@ -4,9 +4,11 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ClubHorizon.Data.DBModel;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 
 namespace ClubHorizon.Controllers
@@ -14,18 +16,123 @@ namespace ClubHorizon.Controllers
     public class BookingController : Controller
     {
         private ghorizonEntities db = new ghorizonEntities();
+        private ApplicationUserManager _userManager;
+        private static decimal Amount=250;
+        public BookingController()
+        {
 
-        // GET: Booking
-
+        }
         public ActionResult Index()
         {
             return View(db.TimeSlotMasters.ToList());
         }
-        public ActionResult checkout()
+        public  async Task<ActionResult> checkout()
         {
-            return View();
+            ViewBag.FirstName = "";
+            ViewBag.LastName = "";
+            ViewBag.EmailId = "";
+            if (Session["BookId"] != null)
+             
+            {
+                if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                    var user = await UserManager.FindByNameAsync(User.Identity.Name);
+                    BookingInfo bi = db.BookingInfoes.Where(i => i.Userid == user.Id).FirstOrDefault();
+                    if (bi != null)
+                    {
+                        ViewBag.FirstName = bi.FirstName;
+                        ViewBag.LastName = bi.LastName;
+                        ViewBag.EmailId = bi.EmailId;
+                    }
+                }
+                var data = EncryptDecryptStringHelper.DecryptString(Session["BookId"].ToString());
+                List<demoevent> Decript = (List<demoevent>)JsonConvert.DeserializeObject<List<demoevent>>(data);
+                return View(Decript);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
+        [HttpPost]
+        public async Task<ActionResult> checkout(BookingInfo Bi)
+        {
+            if (Session["BookId"] != null)
+            {
+                var data = EncryptDecryptStringHelper.DecryptString(Session["BookId"].ToString());
+                List<demoevent> Decript = (List<demoevent>)JsonConvert.DeserializeObject<List<demoevent>>(data);
+                var user = await UserManager.FindByNameAsync(User.Identity.Name);
 
+                BookingInfo bi = new BookingInfo();
+                bi.FirstName = Bi.FirstName;
+                bi.LastName = Bi.LastName;
+                bi.EmailId = Bi.EmailId;
+                bi.Phone = Bi.Phone;
+                bi.NetAmount = Decript.Count() * 250;
+                bi.DiscountAmount = Decript.Count() > 1 ? 100 : 0;
+                bi.TotalAmount = bi.NetAmount - bi.DiscountAmount;
+                bi.CreatedOn = DateTime.Now;
+                bi.CreatedBy = User.Identity.Name;
+                bi.Userid = user.Id;
+                bi.TotalSlot = Decript.Count();
+                bi.TransectionStatus = "Pending";
+                bi.IsActive = false;
+                db.BookingInfoes.Add(bi);
+               await db.SaveChangesAsync();
+                List<TimeSlotMaster> TSM = db.TimeSlotMasters.ToList();
+               
+                foreach (var item in Decript)
+                {
+                    db.BookingDtlInfoes.Add(new BookingDtlInfo
+                    {
+                        OrderId = bi.OrderId,
+                        Date =Convert.ToDateTime( item.date),
+                        TimeSlotsId = TSM.Where(i => i.TimeSlot == item.name).Select(d => d.TimeSlotId).FirstOrDefault(),
+                        TimeSlots=item.name,
+                        Amount= Amount,
+                        CreatedOn=DateTime.Now,
+                        CreatedBy = User.Identity.Name
+
+
+                }) ;
+                    
+                }
+                await db.SaveChangesAsync();
+
+                return RedirectToAction("Success","booking",new { txnId="5632569",Orderid= bi.OrderId });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        public async Task<ActionResult> Success(string txnId,int Orderid)
+        {
+            List<BookingDtlInfo> bdi = db.BookingDtlInfoes.Where(i => i.OrderId == Orderid).ToList();
+
+            List<demoevent> Decript = new List<demoevent>();
+          
+            BookingInfo bi=  db.BookingInfoes.Where(i => i.OrderId == Orderid).FirstOrDefault();
+            bi.TransectionNumber = txnId;
+            bi.TransectionStatus = "Success";
+            bi.IsActive = true;
+            db.Entry(bi).State = EntityState.Modified;
+            db.SaveChanges();
+
+            Session.Remove("BookId");
+            return View(bdi);
+        }
         public JsonResult setTimeSlot(demoevent de)
         {
            
@@ -63,105 +170,123 @@ namespace ClubHorizon.Controllers
             var Tuesdaylist = tsl.Where(i => i.Days.Contains("Tuesday"));
             var Sundaylist = tsl.Where(i => i.Days.Contains("Sunday"));
             var count = 1;
+            DateTime dtFrom = DateTime.Now.Date;
+            List<BookingDtlInfo> BDI=  db.BookingDtlInfoes.Where(i => i.Date >= dtFrom).ToList();
             for (int i = 0; i < 31; i++)
             {
                 var date = DateTime.Now.AddDays(i);
                 if (date.DayOfWeek == DayOfWeek.Monday)
                         {
                     foreach (var item in Mondaylist)
-                    {
-
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                    {if (!BDI.Any(u => u.Date == Convert.ToDateTime(date) && u.TimeSlots == item.TimeSlot))
+{
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
                 else if (date.DayOfWeek == DayOfWeek.Tuesday)
                 {
                     foreach (var item in Tuesdaylist)
                     {
-
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                       if (!BDI.Any(u => Convert.ToDateTime(u.Date).ToString("MMMM/dd/yyyy") == Convert.ToDateTime(date).ToString("MMMM/dd/yyyy") && u.TimeSlots == item.TimeSlot))
+{
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
                else if (date.DayOfWeek == DayOfWeek.Wednesday)
                 {
                     foreach (var item in Wednesdaylist)
                     {
+                        if (!BDI.Any(u => Convert.ToDateTime(u.Date).ToString("MMMM/dd/yyyy") == Convert.ToDateTime(date).ToString("MMMM/dd/yyyy") && u.TimeSlots == item.TimeSlot))
+                        {
 
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
               else  if (date.DayOfWeek == DayOfWeek.Thursday)
                 {
                     foreach (var item in Thursdaylist)
                     {
-
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                       if (!BDI.Any(u => Convert.ToDateTime(u.Date).ToString("MMMM/dd/yyyy") == Convert.ToDateTime(date).ToString("MMMM/dd/yyyy") && u.TimeSlots == item.TimeSlot))
+                        {
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
                 else if (date.DayOfWeek == DayOfWeek.Friday)
                 {
                     foreach (var item in Fridaylist)
                     {
+                       if (!BDI.Any(u => Convert.ToDateTime(u.Date).ToString("MMMM/dd/yyyy") == Convert.ToDateTime(date).ToString("MMMM/dd/yyyy") && u.TimeSlots == item.TimeSlot))
+                        {
 
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
                 else if (date.DayOfWeek == DayOfWeek.Saturday)
                 {
                     foreach (var item in Saturdaylist)
                     {
+                       if (!BDI.Any(u => Convert.ToDateTime(u.Date).ToString("MMMM/dd/yyyy") == Convert.ToDateTime(date).ToString("MMMM/dd/yyyy") && u.TimeSlots == item.TimeSlot))
+                        {
 
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
                 else if (date.DayOfWeek == DayOfWeek.Sunday)
                 {
                     foreach (var item in Sundaylist)
                     {
-
-                        demoevent de = new demoevent();
-                        de.id = count;
-                        de.name = item.TimeSlot;
-                        de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
-                        de.type = "Golf Course";
-                        del.Add(de);
-                        count++;
+                       if (!BDI.Any(u => Convert.ToDateTime(u.Date).ToString("MMMM/dd/yyyy") == Convert.ToDateTime(date).ToString("MMMM/dd/yyyy") && u.TimeSlots == item.TimeSlot))
+                        {
+                            demoevent de = new demoevent();
+                            de.id = count;
+                            de.name = item.TimeSlot;
+                            de.date = Convert.ToDateTime(date).ToString("MMMM/dd/yyyy");
+                            de.type = "Golf Course";
+                            del.Add(de);
+                            count++;
+                        }
                     }
                 }
             }

@@ -27,5 +27,7 @@ namespace ClubHorizon.Data.DBModel
     
         public virtual DbSet<LocationMaster> LocationMasters { get; set; }
         public virtual DbSet<TimeSlotMaster> TimeSlotMasters { get; set; }
+        public virtual DbSet<BookingDtlInfo> BookingDtlInfoes { get; set; }
+        public virtual DbSet<BookingInfo> BookingInfoes { get; set; }
     }
 }

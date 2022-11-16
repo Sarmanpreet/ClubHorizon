@@ -411,6 +411,7 @@
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Booking\Index - Copy.cshtml" />
     <Content Include="Views\Booking\checkout.cshtml" />
+    <Content Include="Views\Booking\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7119,6 +7119,7 @@ body.map-up .map-right {
     .img-logo {
         width: 33% !important
     }
+  
 }
 
     @media only screen and (min-width:768px) {
@@ -8764,3 +8765,25 @@ body.map-up .map-right {
             margin-bottom: 10px
         }
     }
+@media only screen and (max-width: 767.98px) {
+
+    .body-content {
+        padding-top: 15% !important;
+    }
+
+}
+@media only screen and (min-width: 768.98px) {
+    .body-content {
+        padding-top: 9% !important;
+    }
+}
+@media only screen and (min-width: 1200.98px) {
+    .body-content {
+        padding-top: 4% !important;
+    }
+}
+@media only screen and (min-width: 1400.98px) {
+    .body-content {
+        padding-top: 6% !important;
+    }
+}
