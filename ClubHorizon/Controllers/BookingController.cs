@@ -45,6 +45,10 @@ namespace ClubHorizon.Controllers
                         ViewBag.EmailId = bi.EmailId;
                     }
                 }
+                else
+                {
+                    return RedirectToAction("Login","Account");
+                }
                 var data = EncryptDecryptStringHelper.DecryptString(Session["BookId"].ToString());
                 List<demoevent> Decript = (List<demoevent>)JsonConvert.DeserializeObject<List<demoevent>>(data);
                 return View(Decript);
@@ -373,12 +377,29 @@ namespace ClubHorizon.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TimeSlotMaster timeSlotMaster = db.TimeSlotMasters.Find(id);
-            if (timeSlotMaster == null)
+            List<demoevent> Decript = new List<demoevent>();
+            if (Session["BookId"] != null && !string.IsNullOrEmpty(Session["BookId"].ToString()))
             {
-                return HttpNotFound();
+                var data = EncryptDecryptStringHelper.DecryptString(Session["BookId"].ToString());
+                Decript = (List<demoevent>)JsonConvert.DeserializeObject<List<demoevent>>(data);
+
             }
-            return View(timeSlotMaster);
+            if (Decript.Any(i => i.id == id))
+            {
+                int index = Decript.FindIndex(i => i.id == id);
+                Decript.RemoveAt(index);
+            }
+            if (Decript.Count() > 0)
+            {
+                Session.Add("BookId", EncryptDecryptStringHelper.EncryptString(JsonConvert.SerializeObject(Decript)));
+            }
+            else
+            {
+                Session.Remove("BookId");
+
+
+            }
+                return RedirectToAction(nameof(checkout));
         }
 
         // POST: Booking/Delete/5

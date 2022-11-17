@@ -106,7 +106,7 @@
                                         Date
                                         @foreach (var item in Model)
                                         {
-                                            <span>@item.date (@item.name)</span>
+                                            <span>@item.date (@item.name) <a href="@Url.Action("delete","booking",new {id=item.id })"><i class="fa fa-trash"></i></a></span>
 
                                         }
                                     </li>

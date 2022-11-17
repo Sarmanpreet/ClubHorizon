@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ClubHorizon.Data.DBModel;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClubHorizon.Models
@@ -108,5 +109,12 @@ namespace ClubHorizon.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class MyProfile
+    {
+        public ApplicationUser user { get; set; }
+        public List<BookingInfo> BookingInfo { get; set; }
+        public List<BookingDtlInfo> BookingDtlInfo { get; set; }
     }
 }
